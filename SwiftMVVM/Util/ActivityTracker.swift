@@ -11,6 +11,8 @@ import RxCocoa
 import RxSwift
 
 final class ActivityTracker: SharedSequenceConvertibleType {
+    
+    //swiftlint:disable:next type_name
     typealias E = Bool
     typealias SharingStrategy = DriverSharingStrategy
     

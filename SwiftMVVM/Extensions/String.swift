@@ -10,12 +10,8 @@ import Foundation
 
 extension String {
     
-    var isEmpty: Bool {
-        return self == "" || self.trimmingCharacters(in: .whitespacesAndNewlines).count == 0
-    }
-    
     var isNotEmpty: Bool {
-        return !(self == "" || self.trimmingCharacters(in: .whitespacesAndNewlines).count == 0)
+        return !self.isEmpty
     }
     
     var isValidCPF: Bool {

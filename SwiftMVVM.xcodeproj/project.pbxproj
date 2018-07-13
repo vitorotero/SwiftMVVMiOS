@@ -372,6 +372,7 @@
 				F0B9875020F51E6C001D3EFA /* Frameworks */,
 				F0B9875120F51E6C001D3EFA /* Resources */,
 				B2FEFB01EF1FF6965A293BA2 /* [CP] Embed Pods Frameworks */,
+				F020B43D20F8E12400489F6B /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -583,6 +584,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftMVVM/Pods-SwiftMVVM-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		F020B43D20F8E12400489F6B /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		F0B9878620F526D9001D3EFA /* R.Swift */ = {
 			isa = PBXShellScriptBuildPhase;

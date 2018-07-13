@@ -20,7 +20,7 @@ final class AlertNative {
     
     static func okDialogWith(title: String?,
                              message: String,
-                             completion: @escaping () -> Void = {  } ) -> UIAlertController {
+                             completion: @escaping () -> Void = {}) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: R.string.localizable.titleOK(), style: .cancel) { _ in completion() }
         alert.addAction(okAction)

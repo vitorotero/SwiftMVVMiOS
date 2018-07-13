@@ -72,23 +72,23 @@ final class APIServer {
     func request<T: Decodable>(_ route: RouterType, type: T.Type) -> Observable<T> {
         return Observable.create { observer in
             let request = self.session.request(route).responseData { response in
-                if let urlResponse = response.response, 200..<300 ~= urlResponse.statusCode {
-                    // TODO: Handle API error
-                } else {
-                    switch response.result {
-                    case .success(let value):
-                        do {
-                            let result = try JSONDecoder().decode(T.self, from: value)
-                            observer.onNext(result)
-                            observer.onCompleted()
-                        } catch {
-                            observer.onError(APIError.decodable(error))
-                        }
-                        
-                    case .failure(let error):
-                        observer.onError(APIError.http(error))
+                //                if let urlResponse = response.response, 200..<300 ~= urlResponse.statusCode {
+                //                    // Handle API error
+                //                } else {
+                switch response.result {
+                case .success(let value):
+                    do {
+                        let result = try JSONDecoder().decode(T.self, from: value)
+                        observer.onNext(result)
+                        observer.onCompleted()
+                    } catch {
+                        observer.onError(APIError.decodable(error))
                     }
+                    
+                case .failure(let error):
+                    observer.onError(APIError.http(error))
                 }
+                //                }
             }
             
             return Disposables.create {

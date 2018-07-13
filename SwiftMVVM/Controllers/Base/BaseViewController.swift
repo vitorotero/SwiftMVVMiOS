@@ -151,8 +151,6 @@ extension BaseViewController {
         keyboardWillDisappear(with: keyboardSize, duration: animationDuration)
     }
     
-    
-    
     func keyboardWillDisappear(with size: CGSize, duration: TimeInterval) {
         let contentInsets = UIEdgeInsets.zero
         internalScrollView?.contentInset = contentInsets
