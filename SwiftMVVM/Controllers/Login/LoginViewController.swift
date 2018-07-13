@@ -37,7 +37,6 @@ final class LoginViewController: BaseViewController {
     }
     
     override func willAppear() {
-        
     }
     
     // MARK: - Methods

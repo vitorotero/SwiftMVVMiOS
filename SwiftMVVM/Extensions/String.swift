@@ -10,6 +10,10 @@ import Foundation
 
 extension String {
     
+    static var emptyValue: String {
+        return ""
+    }
+    
     var isNotEmpty: Bool {
         return !self.isEmpty
     }
@@ -84,4 +88,32 @@ extension String {
         return !self.isMailValid
     }
     
+    var onlyNumbers: String {
+        if self.isEmpty {
+            return ""
+        }
+        return self.replacingOccurrences(of: "\\D",
+                                         with: "",
+                                         options: .regularExpression,
+                                         range: self.startIndex..<self.endIndex)
+    }
+    
+    var firstUppercased: String {
+        guard let first = first else { return "" }
+        return String(first).uppercased() + dropFirst().lowercased()
+    }
+    
+    func toDate(withFormat format: Constants) -> Date {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: Date.constants(.locationBr))
+        formatter.dateFormat = format.rawValue
+        
+        if let date = formatter.date(from: self) {
+            return date
+        } else {
+            fatalError("Paramater format not compatible with date")
+        }
+        
+        return Date()
+    }
 }

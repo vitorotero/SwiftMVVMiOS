@@ -19,6 +19,9 @@
 		F020B43820F7D06700489F6B /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F020B43720F7D06700489F6B /* R.generated.swift */; };
 		F020B43A20F7F6C100489F6B /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F020B43920F7F6C100489F6B /* UIColor.swift */; };
 		F020B43C20F8D7AB00489F6B /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F020B43B20F8D7AB00489F6B /* ActivityIndicator.swift */; };
+		F020B43F20F9161700489F6B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = F020B43E20F9161700489F6B /* Date.swift */; };
+		F020B44120F916F200489F6B /* SharedPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = F020B44020F916F200489F6B /* SharedPreferences.swift */; };
+		F020B44320F91F3000489F6B /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = F020B44220F91F3000489F6B /* Int.swift */; };
 		F069422920F53DAB00FBEC16 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F069422820F53DAB00FBEC16 /* LoginViewModel.swift */; };
 		F069423520F540F400FBEC16 /* Observable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F069423420F540F400FBEC16 /* Observable+Ext.swift */; };
 		F069423820F5419800FBEC16 /* ErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F069423720F5419800FBEC16 /* ErrorTracker.swift */; };
@@ -77,6 +80,9 @@
 		F020B43720F7D06700489F6B /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		F020B43920F7F6C100489F6B /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		F020B43B20F8D7AB00489F6B /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		F020B43E20F9161700489F6B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		F020B44020F916F200489F6B /* SharedPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedPreferences.swift; sourceTree = "<group>"; };
+		F020B44220F91F3000489F6B /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		F069422820F53DAB00FBEC16 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		F069423420F540F400FBEC16 /* Observable+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+Ext.swift"; sourceTree = "<group>"; };
 		F069423720F5419800FBEC16 /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
@@ -161,6 +167,7 @@
 			children = (
 				F069423720F5419800FBEC16 /* ErrorTracker.swift */,
 				F069423920F5456100FBEC16 /* ActivityTracker.swift */,
+				F020B44020F916F200489F6B /* SharedPreferences.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -323,12 +330,14 @@
 		F0B9878B20F52A0B001D3EFA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				F020B43E20F9161700489F6B /* Date.swift */,
+				F020B44220F91F3000489F6B /* Int.swift */,
 				F069423420F540F400FBEC16 /* Observable+Ext.swift */,
-				F069423B20F5466F00FBEC16 /* String.swift */,
 				F069424A20F550DA00FBEC16 /* Realm+Ext.swift */,
-				F020B42D20F7A8FB00489F6B /* UIViewController.swift */,
+				F069423B20F5466F00FBEC16 /* String.swift */,
 				F020B43120F7C7BE00489F6B /* UIAlertController.swift */,
 				F020B43920F7F6C100489F6B /* UIColor.swift */,
+				F020B42D20F7A8FB00489F6B /* UIViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -621,6 +630,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0B9878F20F52ABE001D3EFA /* LoginViewController.swift in Sources */,
+				F020B44320F91F3000489F6B /* Int.swift in Sources */,
 				F069424920F5502D00FBEC16 /* DomainConvertibleType.swift in Sources */,
 				F020B42E20F7A8FB00489F6B /* UIViewController.swift in Sources */,
 				F069424420F54FB800FBEC16 /* RunLoopThreadScheduler.swift in Sources */,
@@ -639,7 +649,9 @@
 				F069424120F54C6F00FBEC16 /* BaseRepository.swift in Sources */,
 				F0B9879520F5307D001D3EFA /* APIServer.swift in Sources */,
 				F069423A20F5456100FBEC16 /* ActivityTracker.swift in Sources */,
+				F020B43F20F9161700489F6B /* Date.swift in Sources */,
 				F0B9875720F51E6C001D3EFA /* AppDelegate.swift in Sources */,
+				F020B44120F916F200489F6B /* SharedPreferences.swift in Sources */,
 				F069424720F5501F00FBEC16 /* RealmRepresentable.swift in Sources */,
 				F069423520F540F400FBEC16 /* Observable+Ext.swift in Sources */,
 				F0B9879320F52AEB001D3EFA /* BaseViewController.swift in Sources */,
