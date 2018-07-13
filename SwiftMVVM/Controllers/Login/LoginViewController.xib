@@ -26,36 +26,52 @@
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <action selector="userTextFieldValueChanged:" destination="-1" eventType="editingChanged" id="9Lz-ux-YEq"/>
+                    </connections>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Senha" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wVy-Hl-LwK">
                     <rect key="frame" x="20" y="90" width="280" height="30"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                    <connections>
+                        <action selector="passwordTextFieldValueChanged:" destination="-1" eventType="editingChanged" id="Xw5-n9-omV"/>
+                    </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K5w-Fx-rfD">
-                    <rect key="frame" x="20" y="140" width="280" height="30"/>
+                    <rect key="frame" x="20" y="145" width="280" height="30"/>
                     <state key="normal" title="Login"/>
                     <connections>
                         <action selector="signInButtonTapped:" destination="-1" eventType="touchUpInside" id="7LY-Xq-aBt"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MCP-gu-RU9">
-                    <rect key="frame" x="20" y="195" width="280" height="30"/>
-                    <state key="normal" title="Recuperar Usuario"/>
+                    <rect key="frame" x="20" y="200" width="280" height="30"/>
+                    <state key="normal" title="Recuperar Usuario Web"/>
                     <connections>
                         <action selector="getUserButtonTapped:" destination="-1" eventType="touchUpInside" id="cmB-OI-0ph"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-Eb-eaQ">
+                    <rect key="frame" x="20" y="255" width="280" height="30"/>
+                    <state key="normal" title="Recuperar Usuario Local"/>
+                    <connections>
+                        <action selector="getUserLocalButtonTapped:" destination="-1" eventType="touchUpInside" id="Wv7-he-Nnf"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="MCP-gu-RU9" secondAttribute="trailing" constant="20" id="1ud-CR-Csg"/>
-                <constraint firstItem="K5w-Fx-rfD" firstAttribute="top" secondItem="wVy-Hl-LwK" secondAttribute="bottom" constant="20" id="Ahp-IT-Bsc"/>
+                <constraint firstItem="K5w-Fx-rfD" firstAttribute="top" secondItem="wVy-Hl-LwK" secondAttribute="bottom" constant="25" id="Ahp-IT-Bsc"/>
                 <constraint firstItem="MCP-gu-RU9" firstAttribute="top" secondItem="K5w-Fx-rfD" secondAttribute="bottom" constant="25" id="EmY-4h-M3h"/>
+                <constraint firstItem="lJg-Eb-eaQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Gpi-RO-XfH"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kQR-YW-wkm" secondAttribute="trailing" constant="20" id="LV2-dO-Bdg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lJg-Eb-eaQ" secondAttribute="trailing" constant="20" id="Mqk-Eh-Zyr"/>
                 <constraint firstItem="wVy-Hl-LwK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Pkt-uj-gPR"/>
                 <constraint firstItem="K5w-Fx-rfD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="SHb-AQ-eAk"/>
+                <constraint firstItem="lJg-Eb-eaQ" firstAttribute="top" secondItem="MCP-gu-RU9" secondAttribute="bottom" constant="25" id="VNC-wp-xx4"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="K5w-Fx-rfD" secondAttribute="trailing" constant="20" id="YiP-lk-fHk"/>
                 <constraint firstItem="kQR-YW-wkm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="d2g-Ph-vOx"/>
                 <constraint firstItem="MCP-gu-RU9" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="eOi-eh-YVc"/>

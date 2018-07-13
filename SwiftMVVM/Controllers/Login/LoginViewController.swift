@@ -42,17 +42,6 @@ final class LoginViewController: BaseViewController {
     // MARK: - Methods
     override func bindViewModel() {
         super.bindViewModel()        
-        userTextField.addTarget(
-            self,
-            action: #selector(userTextFieldChanged(_:)),
-            for: .editingChanged
-        )
-        
-        passwordTextField.addTarget(
-            self,
-            action: #selector(passwordTextFieldChanged(_:)),
-            for: .editingChanged
-        )
         
         viewModel.outputs.activityIndicator
             .drive(isLoading)
@@ -96,14 +85,24 @@ final class LoginViewController: BaseViewController {
                 AlertNative.okDialogWith(title: R.string.localizable.titleSuccess(), message: user.user).show()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.outputs.getUserLocalSuccess
+            .drive(onNext: { [weak self] user in
+                self?.userTextField.text = user.user
+                self?.viewModel.inputs.userChanged(user.user)
+                
+                self?.passwordTextField.text = user.password
+                self?.viewModel.inputs.passwordChanged(user.password)
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Actions
-    @objc private func userTextFieldChanged(_ textField: UITextField) {
+    @IBAction func userTextFieldValueChanged(_ textField: UITextField) {
         viewModel.inputs.userChanged(textField.text)
     }
     
-    @objc private func passwordTextFieldChanged(_ textField: UITextField) {
+    @IBAction func passwordTextFieldValueChanged(_ textField: UITextField) {
         viewModel.inputs.passwordChanged(textField.text)
     }
     
@@ -114,4 +113,9 @@ final class LoginViewController: BaseViewController {
     @IBAction func getUserButtonTapped(_ sender: Any) {
         viewModel.inputs.getUserTapped()
     }
+    
+    @IBAction func getUserLocalButtonTapped(_ sender: Any) {
+        viewModel.inputs.getUserLocalTapped()
+    }
+    
 }

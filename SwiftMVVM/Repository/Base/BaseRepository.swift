@@ -25,6 +25,10 @@ class AbstractRespository<T> {
         abstractMethod()
     }
     
+    func query(by id: Int) -> Observable<T> {
+        abstractMethod()
+    }
+    
     func query(with predicate: NSPredicate, sortDescriptors: [NSSortDescriptor] = []) -> Observable<[T]> {
         abstractMethod()
     }
@@ -69,6 +73,14 @@ AbstractRespository<T> where T == T.RealmType.DomainType, T.RealmType: Object {
             .subscribeOn(scheduler)
     }
     
+    override func query(by id: Int) -> Observable<T> {
+        return Observable.deferred {
+            let object = self.realm.object(ofType: T.RealmType.self, forPrimaryKey: id)?.asDomain()
+            return Observable.from(optional: object)
+            }
+            .subscribeOn(scheduler)
+    }
+    
     override func query(by id: String) -> Observable<T> {
         return Observable.deferred {
             let object = self.realm.object(ofType: T.RealmType.self, forPrimaryKey: id)?.asDomain()
@@ -96,7 +108,7 @@ AbstractRespository<T> where T == T.RealmType.DomainType, T.RealmType: Object {
         return Observable.deferred { self.realm.rx.save(entity) }
             .subscribeOn(scheduler)
     }
-    
+        
     override func saveCollection(_ entities: [T]) -> Observable<Void> {
         return Observable.deferred { self.realm.rx.save(entities) }
             .subscribeOn(scheduler)

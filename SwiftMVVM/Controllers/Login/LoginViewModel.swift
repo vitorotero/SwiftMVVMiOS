@@ -15,6 +15,7 @@ protocol LoginViewModelInput {
     func passwordChanged(_ value: String?)
     func signInTapped()
     func getUserTapped()
+    func getUserLocalTapped()
 }
 
 protocol LoginViewModelOutput {
@@ -22,8 +23,8 @@ protocol LoginViewModelOutput {
     var activityIndicator: Driver<Bool> { get }
     var signInSuccess: Driver<Void> { get }
     var signInError: Driver<String> { get }
-    
     var getUserSuccess: Driver<User> { get }
+    var getUserLocalSuccess: Driver<User> { get }
 }
 
 protocol LoginViewModelType {
@@ -37,8 +38,8 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
     let activityIndicator: SharedSequence<DriverSharingStrategy, Bool>
     let signInSuccess: SharedSequence<DriverSharingStrategy, Void>
     let signInError: SharedSequence<DriverSharingStrategy, String>
-    
     let getUserSuccess: SharedSequence<DriverSharingStrategy, User>
+    let getUserLocalSuccess: SharedSequence<DriverSharingStrategy, User>
     
     init(userDataProvider: UserDataProviderProtocol = UserDataProvider()) {
         let errorTracker = ErrorTracker()
@@ -84,6 +85,15 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             })
+        
+        getUserLocalSuccess = getUserLocalTappedProperty
+            .asDriverOnErrorJustComplete()
+            .flatMap({ _ in
+                userDataProvider.getUserLocal()
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriver(onErrorJustReturn: User(id: 0, user: "asdasdasd", password: "asdasdas"))
+            })
     }
     
     private let userProperty = PublishSubject<String?>()
@@ -104,6 +114,11 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
     private let getUserTappedProperty = PublishSubject<Void>()
     func getUserTapped() {
         getUserTappedProperty.onNext(())
+    }
+    
+    private let getUserLocalTappedProperty = PublishSubject<Void>()
+    func getUserLocalTapped() {
+        getUserLocalTappedProperty.onNext(())
     }
     
     var inputs: LoginViewModelInput { return self }
