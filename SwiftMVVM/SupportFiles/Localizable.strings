@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  SwiftMVVM
+
+  Created by Vitor Otero Machado on 12/07/18.
+  Copyright © 2018 TeCApp. All rights reserved.
+*/
+
+// MARK: - Global Texts
+"TitleOK" = "OK";
+"TitleError" = "Erro";
+"NoInternet" = "Não foi possível conectar com o servidor. Por favor, verifique a sua conexão com a internet e tente novamente.";
+"GenericMessageError" = "Ocorreu um erro inesperado. Por favor, tente novamente.";
+
+// MARK: - LoginViewController
+"LoginViewMailNotValidText" = "O email informado está incorreto.";
+"LoginViewPasswordNotValidText" = "O campo de senha é vazio ou possui menos que 4 caracteres.";
