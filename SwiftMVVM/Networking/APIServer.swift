@@ -40,7 +40,7 @@ protocol RouterType: URLRequestConvertible {
 
 extension RouterType {
     var baseURL: URL {
-        return URL(string: "http://10.100.77.196/Painel/")!
+        return URL(string: "http://10.100.77.196/Painel/simpleApi/")!
     }
     
     var headers: HTTPHeaders? {
