@@ -24,14 +24,15 @@ enum APIError: Error {
     case timeout(message: String)
     case lostConnection(message: String)
     case statusMessageJson(json: [String: Any], codeError: Int)
-    case decodable(Error)
+    case decodable(Error, Data)
 }
 
 protocol RouterType: URLRequestConvertible {
     var baseURL: URL { get }
     var path: String { get }
     var method: HTTPMethod { get }
-    var params: [String: Any]? { get }
+    var paramsJson: [String: Any]? { get }
+    var paramsQueryString: [String: Any]? { get }
     var encoding: ParameterEncoding { get }
     var headers: HTTPHeaders? { get }
     var contentType: String { get }
@@ -39,7 +40,7 @@ protocol RouterType: URLRequestConvertible {
 
 extension RouterType {
     var baseURL: URL {
-        return URL(string: "")!
+        return URL(string: "http://10.100.77.196/Painel/")!
     }
     
     var headers: HTTPHeaders? {
@@ -47,7 +48,7 @@ extension RouterType {
     }
     
     var encoding: ParameterEncoding {
-        return JSONEncoding.default
+        return paramsQueryString != nil ? URLEncoding.queryString :  JSONEncoding.default
     }
     
     var contentType: String {
@@ -58,7 +59,10 @@ extension RouterType {
         let url = baseURL.appendingPathComponent(path)
         var urlRequest = try URLRequest(url: url, method: method, headers: headers)
         urlRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
-        return try encoding.encode(urlRequest, with: params)
+        
+        return paramsQueryString != nil ?
+            try encoding.encode(urlRequest, with: paramsQueryString)
+            : try encoding.encode(urlRequest, with: paramsJson)
     }
 }
 
@@ -71,29 +75,44 @@ final class APIServer {
     
     func request<T: Decodable>(_ route: RouterType, type: T.Type) -> Observable<T> {
         return Observable.create { observer in
-            let request = self.session.request(route).responseData { response in
-                //                if let urlResponse = response.response, 200..<300 ~= urlResponse.statusCode {
-                //                    // Handle API error
-                //                } else {
-                switch response.result {
-                case .success(let value):
-                    do {
-                        let result = try JSONDecoder().decode(T.self, from: value)
-                        observer.onNext(result)
-                        observer.onCompleted()
-                    } catch {
-                        observer.onError(APIError.decodable(error))
-                    }
+            let request = self.session
+                .request(route)
+                .validate()
+                .responseData { response in
+                    self.printRequest(response)
                     
-                case .failure(let error):
-                    observer.onError(APIError.http(error))
-                }
-                //                }
+                    switch response.result {
+                    case .success(let value):
+                        do {
+                            let result = try JSONDecoder().decode(T.self, from: value)
+                            observer.onNext(result)
+                            observer.onCompleted()
+                        } catch {
+                            observer.onError(APIError.decodable(error, value))
+                        }
+                        
+                    case .failure(let error):
+                        observer.onError(APIError.http(error))
+                    }
             }
             
             return Disposables.create {
                 request.cancel()
             }
+        }
+    }
+    
+    private func printRequest(_ response: DataResponse<Data>) {
+        if let aaa = response.request, let body = aaa.httpBody {
+            print("Request Parameters: \(String(describing: String(data: body, encoding: .utf8)))")
+        }
+        
+        print("Request: \(String(describing: response.request))")
+        print("Response: \(String(describing: response.response))")
+        print("Error: \(String(describing: response.error))")
+        
+        if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+            print("Data Parsed: \(utf8Text)")
         }
     }
 }

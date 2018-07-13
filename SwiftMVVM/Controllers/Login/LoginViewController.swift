@@ -83,7 +83,7 @@ final class LoginViewController: BaseViewController {
         
         viewModel.outputs.signInSuccess
             .drive(onNext: { _ in
-                print("sucesso")
+                AlertNative.okDialogWith(title: R.string.localizable.titleSuccess(), message: "sucesso").show()
             })
             .disposed(by: disposeBag)
         
@@ -91,6 +91,12 @@ final class LoginViewController: BaseViewController {
             .drive(onNext: { message in
                 AlertNative.okDialogWith(title: R.string.localizable.titleError(), message: message).show()
             }).disposed(by: disposeBag)
+        
+        viewModel.outputs.getUserSuccess
+            .drive(onNext: { user in
+                AlertNative.okDialogWith(title: R.string.localizable.titleSuccess(), message: user.user).show()
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Actions
@@ -104,5 +110,9 @@ final class LoginViewController: BaseViewController {
     
     @IBAction func signInButtonTapped(_ sender: Any) {
         viewModel.inputs.signInTapped()
+    }
+    
+    @IBAction func getUserButtonTapped(_ sender: Any) {
+        viewModel.inputs.getUserTapped()
     }
 }

@@ -11,13 +11,14 @@ import Alamofire
 
 enum UserRouter {
     case login(user: String, password: String)
+    case getUser(id: Int)
 }
 
 extension UserRouter: RouterType {
     var path: String {
         switch self {
-        case .login:
-            return "login"
+        case .login, .getUser:
+            return "index.php"
         }
     }
     
@@ -25,13 +26,24 @@ extension UserRouter: RouterType {
         switch self {
         case .login:
             return .post
+        case .getUser:
+            return .get
         }
     }
     
-    var params: [String : Any]? {
+    var paramsJson: [String : Any]? {
         switch self {
         case let .login(email, password):
-            return ["email": email, "password": password]
+            return ["user": email, "password": password]
+        default: return nil
+        }
+    }
+    
+    var paramsQueryString: [String : Any]? {
+        switch self {
+        case let .getUser(id):
+            return ["id": id]
+        default: return nil
         }
     }
 }

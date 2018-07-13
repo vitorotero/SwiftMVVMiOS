@@ -11,12 +11,18 @@ import RxSwift
 
 protocol UserDataProviderProtocol {
     func signIn(user: String, password: String) -> Observable<User>
+    func getUser(byId id: Int) -> Observable<User>
 }
 
 final class UserDataProvider: UserDataProviderProtocol {
-    func signIn(user: String, password: String) -> Observable<User> {        
-        return Observable
-            .just(User(id: 0, user: "teste", password: "1234"))
-            .delay(TimeInterval.init(1), scheduler: MainScheduler.instance)
+    
+    let apiServer = APIServer()
+    
+    func signIn(user: String, password: String) -> Observable<User> {
+        return apiServer.request(UserRouter.login(user: user, password: password), type: User.self)
+    }
+    
+    func getUser(byId id: Int) -> Observable<User> {
+        return apiServer.request(UserRouter.getUser(id: id), type: User.self)
     }
 }

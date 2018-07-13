@@ -11,7 +11,12 @@ import RxAlamofire
 import Alamofire
 import ObjectMapper
 
-class ErrorNetworkingParse {
+struct ErrorMessage: Codable {
+    let code: Int
+    let message: String
+}
+
+final class ErrorNetworkingParse {
     
     static func getMessage(error: Error) -> String {
         var message = R.string.localizable.genericMessageError()
@@ -26,6 +31,13 @@ class ErrorNetworkingParse {
                 message = R.string.localizable.noInternet()
             case .timeout(let msg):
                 message = msg
+            case .decodable( _, let value):
+                do {
+                    let errorMessage = try JSONDecoder().decode(ErrorMessage.self, from: value)
+                    message = errorMessage.message
+                } catch {
+                    message = R.string.localizable.genericMessageError()
+                }
             default:
                 message = R.string.localizable.genericMessageError()
             }

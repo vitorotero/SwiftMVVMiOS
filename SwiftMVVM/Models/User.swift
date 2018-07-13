@@ -12,4 +12,10 @@ struct User: Codable {
     let id: Int
     let user: String
     let password: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case user = "email"
+        case password
+    }
 }

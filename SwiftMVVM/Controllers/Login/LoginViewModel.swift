@@ -14,13 +14,17 @@ protocol LoginViewModelInput {
     func userChanged(_ value: String?)
     func passwordChanged(_ value: String?)
     func signInTapped()
+    func getUserTapped()
 }
 
 protocol LoginViewModelOutput {
     var isFormValid: Driver<Void> { get }
     var activityIndicator: Driver<Bool> { get }
+    var signInSuccess: Driver<Void> { get }
     var signInError: Driver<String> { get }
-    var signInSuccess: Driver<Void> { get }}
+    
+    var getUserSuccess: Driver<User> { get }
+}
 
 protocol LoginViewModelType {
     var inputs: LoginViewModelInput { get }
@@ -31,8 +35,10 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
     
     let isFormValid: SharedSequence<DriverSharingStrategy, Void>
     let activityIndicator: SharedSequence<DriverSharingStrategy, Bool>
-    let signInError: SharedSequence<DriverSharingStrategy, String>
     let signInSuccess: SharedSequence<DriverSharingStrategy, Void>
+    let signInError: SharedSequence<DriverSharingStrategy, String>
+    
+    let getUserSuccess: SharedSequence<DriverSharingStrategy, User>
     
     init(userDataProvider: UserDataProviderProtocol = UserDataProvider()) {
         let errorTracker = ErrorTracker()
@@ -58,16 +64,25 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
             .asDriverOnErrorJustComplete()
             .flatMapLatest { (inputs) -> Driver<Void> in
                 return userDataProvider.signIn(user: inputs.user, password: inputs.password)
-                .trackActivity(activityTracker)
-                .trackError(errorTracker)
-                .mapToVoid()
-                .asDriverOnErrorJustComplete()
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .mapToVoid()
+                    .asDriverOnErrorJustComplete()
         }
         
         signInError = errorTracker.asDriver()
             .flatMapLatest({ error in
                 let errorMessage = ErrorNetworkingParse.getMessage(error: error)
                 return SharedSequence.just(errorMessage)
+            })
+        
+        getUserSuccess = getUserTappedProperty
+            .asDriverOnErrorJustComplete()
+            .flatMapLatest({ _ in
+                return userDataProvider.getUser(byId: 0)
+                    .trackActivity(activityTracker)
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
             })
     }
     
@@ -86,14 +101,15 @@ final class LoginViewModel: LoginViewModelType, LoginViewModelInput, LoginViewMo
         signInTappedProperty.onNext(())
     }
     
+    private let getUserTappedProperty = PublishSubject<Void>()
+    func getUserTapped() {
+        getUserTappedProperty.onNext(())
+    }
+    
     var inputs: LoginViewModelInput { return self }
     var outputs: LoginViewModelOutput { return self }
 }
 
 private func validateForm(email: String, password: String) -> Bool {
-    print("email:", email.isMailValid)
-    print("password:", password.isNotEmpty)
-    print("password Count:", password.count > 3)
-    print("Condição:", email.isMailValid && password.isNotEmpty && password.count > 3)
     return email.isMailValid && password.isNotEmpty && password.count > 3
 }
