@@ -37,6 +37,10 @@ class AbstractRespository<T> {
         abstractMethod()
     }
     
+    func saveWithoutRx(_ entity: T) {
+        abstractMethod()
+    }
+    
     func saveCollection(_ entities: [T]) -> Observable<Void> {
         abstractMethod()
     }
@@ -108,7 +112,17 @@ AbstractRespository<T> where T == T.RealmType.DomainType, T.RealmType: Object {
         return Observable.deferred { self.realm.rx.save(entity) }
             .subscribeOn(scheduler)
     }
-        
+    
+    override func saveWithoutRx(_ entity: T) {
+        do {
+            try self.realm.write {
+                self.realm.add(entity.asRealm(), update: true)
+            }
+        } catch {
+            
+        }
+    }
+    
     override func saveCollection(_ entities: [T]) -> Observable<Void> {
         return Observable.deferred { self.realm.rx.save(entities) }
             .subscribeOn(scheduler)

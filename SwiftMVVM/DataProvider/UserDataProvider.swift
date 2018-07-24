@@ -25,10 +25,7 @@ final class UserDataProvider: UserDataProviderProtocol {
     func signIn(user: String, password: String) -> Observable<User> {
         return apiServer.request(UserRouter.login(user: user, password: password), type: User.self)
             .flatMap({ user -> Observable<User> in
-                self.userRepository.save(user)
-                    .asDriverOnErrorJustComplete()
-                    .drive()
-                    .disposed(by: self.disposeBag)
+                self.userRepository.saveWithoutRx(user)
                 
                 return Observable.just(user)
             })
